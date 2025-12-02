@@ -25,6 +25,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.oracle.database.jdbc:ojdbc11:23.7.0.25.01'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

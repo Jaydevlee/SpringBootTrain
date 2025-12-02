@@ -7,8 +7,18 @@ import lombok.Setter;
 @Setter
 
 public class Member {
-    private String id;
+    private int id;
     private String name;
     private String email;
     private int age;
+
+    public Member(int id, String name, String email, int age) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.age = age;
+    }
+    public String toString(){
+        return "Member(id=" + id + ", name=" + name + ", email=" + email + ", age=" + age + ")";
+    }
 }
