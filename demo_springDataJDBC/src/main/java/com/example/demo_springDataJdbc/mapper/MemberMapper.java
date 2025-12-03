@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface MemberMapper {
     List<Member> selectAll(); //select 된 결과가 여러개 인 경우(연동)
     Optional<Member> selectById(@Param("id") Long id); //id를 조건으로 select 결과가 1개만 나온다.(select 결과가 1개인 경우)
-    Optional<Member> selectByEmail(@Param("email") Long id); //email을 조건으로 select 결과가 1개만 나온다.
+    Optional<Member> selectByEmail(@Param("email") String email); //email을 조건으로 select 결과가 1개만 나온다.
     List<Member> selectAllOrderByAgeAsc(); //나이가 적은 순서 대로 select 결과를 표시
     //select된 결과가 여러개 인 경우 정렬 기준을 사용자가 선택
     List<Member> selectAllOrderBy(@Param("order") String order, @Param("dir") String dir);

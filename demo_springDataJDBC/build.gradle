@@ -30,7 +30,7 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:4.0.0'
 	compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
-    //runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
 	annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'com.h2database:h2:2.4.240'
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jdbc-test'
