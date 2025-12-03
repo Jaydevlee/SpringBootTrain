@@ -14,6 +14,10 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor // 기본 생성자를 자동으로 생성
 public class Member {
     @Id
+    /*Spring Data JDBC에서 @Id의 역할
+    * 해당 필드가 테이블의 기본키(Primary Key)임을 표시
+    * save()시 insert, update구별 - 기본키가 null이면 insert, null이 아니면 update
+    */
     private Long id;
     private String name;
     private String email;
