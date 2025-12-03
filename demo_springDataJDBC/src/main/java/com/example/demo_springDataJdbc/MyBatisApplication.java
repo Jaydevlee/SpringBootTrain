@@ -1,6 +1,8 @@
 package com.example.demo_springDataJdbc;
 
+import com.example.demo_springDataJdbc.mapper.ArticleMapper;
 import com.example.demo_springDataJdbc.mapper.MemberMapper;
+import com.example.demo_springDataJdbc.model.Article;
 import com.example.demo_springDataJdbc.model.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class MyBatisApplication implements ApplicationRunner {
     private final MemberMapper memberMapper;
+    private final ArticleMapper articleMapper;
 
 
   @Override
@@ -25,5 +28,13 @@ public class MyBatisApplication implements ApplicationRunner {
             .selectByEmail("HyeokJung@hanbit.co.kr")
             .orElseThrow();
     log.info("Member: {}", member);
+
+    Article article = Article.builder().
+                    title("Hello, MyBatis")
+                    .description("MyBatis is an SQL Mapper framework")
+            .memberId(member.getId())
+            .build();
+      int inserted = articleMapper.insert(article);
+      log.info("Inserted {}", inserted);
   }
 }

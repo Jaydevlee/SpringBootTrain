@@ -12,10 +12,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Article {
-    private Long id;
-    private String title;
-    private String description;
-    private Date Created;
-    private Date updated;
-    private Long memberId;
+    private Long id; //게시물 번호
+    private String title; //제목
+    private String description; // 내용
+    private Date Created; // 작성일
+    private Date updated; //수정일
+    private Long memberId; //글쓴이
 }
