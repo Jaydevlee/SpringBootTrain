@@ -11,5 +11,5 @@ public interface ProductQueryDslRepository {
     DESCRIPTION,
     BOTH
   }
-  List<Product> queryByKeyword(String keyword, SearchType searchType,
+  List<Product> queryByKeyword(String keyword, SearchType searchType,long offset, long limit);
 }
