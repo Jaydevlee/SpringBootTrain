@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo_springDataJdbc.mapper.MemberMapper">
+  <!-- List<Member> selectAll(); -->
+  <select id="selectAll">
+    SELECT * FROM member
+  </select>
+  <!-- Optional<Member>selectById(@Param("id) int id); -->
+  <select id="selectById">
+    SELECT * FROM member WHERE id=#{id}
+  </select>
+  <!-- Optional<member> selectByEmail(@Param("email") String email-->
+  <select id="selectByEmail">
+    SELECT * FROM member WHERE email=#{email}
+  </select>
+  <!-- List<Member> selectByNameLike(@Param("name") String name); -->
+  <select id="selectByNameLike">
+    SELECT * FROM member WHERE NAME LIKE = #{name}
+  </select>
+  <!-- List<Member> selectAllOrderByAgeASC(); -->
+  <select id="selectAllOrderByAgeAsc">
+    SELECT * FROM member ORDER BY AGE ASC
+  </select>
+  <!-- List<Member> selectAllOrderBy(@Param("order") String order, @Param("dir") String dir); -->
+  <select id="selectAllOrderBy">
+    SELECT * FROM member ORDER BY ${order} ${dir}
+  </select>
+  <!-- int selectAllCount() -->
+  <select id="selectAllCount" resultType="int">
+    SELECT COUNT(*) FROM member
+  </select>
+  <!-- int insert(@Param("member") Member member); -->
+  <insert id = "insert" useGeneratedKeys="true" keyProperty="member.id">
+    INSERT INTO member (name, email, age) VALUES (#{member.name}, #{member.email}, #{member.age})
+  </insert>
+  <!-- int update(@Param("member") Member member); -->
+  <update id="update">
+    UPDATE member SET name=#{member.name}, email=#{member.email}, age=#{member.age}
+    WHERE id=#{member.id}
+  </update>
+  <!-- int delete(@Param("member") Member member); -->
+  <delete id="delete">
+    DELETE FROM member WHERE id=#{member.id}
+  </delete>
+  <!-- int deleteById(@Param("id") String id); -->
+  <delete id="deleteById">
+    DELETE FROM member WHERE id=#{id}
+  </delete>
+  <!-- int deleteAll() -->
+  <delete id="deleteAll">
+    DELETE FROM MEMBER
+  </delete>
+</mapper>

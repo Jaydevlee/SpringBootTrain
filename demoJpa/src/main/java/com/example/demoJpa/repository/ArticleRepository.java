@@ -1,0 +1,7 @@
+package com.example.demoJpa.repository;
+
+import com.example.demoJpa.model.Article;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ArticleRepository extends JpaRepository<Article, Long> {
+}
