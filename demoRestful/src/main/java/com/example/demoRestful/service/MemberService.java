@@ -5,7 +5,9 @@ import com.example.demoRestful.dto.MemberResponse;
 import com.example.demoRestful.model.Member;
 import com.example.demoRestful.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
+import com.example.demoRestful.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,5 +46,10 @@ public class MemberService {
                 .map(this::mapToMemberResponse)
                 //다시 리스트로 만들기
                 .toList();
+    }
+
+    public MemberResponse findById(Long id){
+        Member member = memberRepository.findById(id).orElseThrow(NotFoundException::new);
+        return mapToMemberResponse(member);
     }
 }

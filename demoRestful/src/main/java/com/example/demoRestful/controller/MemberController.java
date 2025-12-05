@@ -6,6 +6,7 @@ import com.example.demoRestful.model.Member;
 import com.example.demoRestful.repository.MemberRepository;
 import com.example.demoRestful.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +30,10 @@ public class MemberController {
     @GetMapping
     public List<MemberResponse> getAll(){
       return memberService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public MemberResponse getById(@Param("id") Long id){
+      return memberService.findById(id);
     }
 }
