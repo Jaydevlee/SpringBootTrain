@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 관리</title>
+    <!-- jQuery CDN 반드시 추가 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<h1>회원 목록</h1>
+
+<button id="btnLoad">회원 목록 불러오기</button><br>
+회원아이디 : <input type="text" id="id"><br>
+
+<button id="idLoad" type="button">회원의 정보</button>
+<table border="1" style="margin-top:10px;">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>이름</th>
+        <th>이메일</th>
+        <th>나이</th>
+    </tr>
+    </thead>
+    <tbody id="memberTableBody">
+    <!-- 여기로 JS가 데이터를 채워 넣음 -->
+    </tbody>
+</table>
+
+<hr>
+
+<h2>회원 추가</h2>
+
+    이름: <input type="text" id="name"><br>
+    이메일: <input type="text" id="email"><br>
+    나이: <input type="number" id="age"><br>
+    <button id="register" type="button">등록</button>
+    <button id="modify" type="button">수정</button>
+    <button id="remove" type="button">삭제</button>
+
+
+<script>
+    // 회원 목록 불러오기
+    function loadMembers() {    // loadMembers 함수 선언
+        $.ajax({
+            url: '/api/members',
+            method: 'GET',
+            dataType: 'json', // JSON 응답 기대
+            success: function (members) {
+                const tbody = $('#memberTableBody');
+                tbody.empty(); // 기존 행 삭제
+
+                members.forEach(function (m) {
+                    const row =
+                        '<tr>' +
+                        '<td>' + m.id + '</td>' +
+                        '<td>' + m.name + '</td>' +
+                        '<td>' + m.email + '</td>' +
+                        '<td>' + m.age + '</td>' +
+                        '</tr>';
+                    tbody.append(row);
+                });
+            },
+            error: function (xhr, status, error) {
+                alert('회원 목록 조회 실패: ' + status);
+                console.log(xhr.responseText);
+            }
+        });
+    }
+    // id로 해당 회원 조회하기
+    function loadMember() {    // loadMember 함수 선언
+        let id = $("#id").val();
+        if (!id) {
+            alert("ID를 입력하세요");
+            return;
+        }
+        $.ajax({
+            url: '/api/members/'+id,
+            method: 'GET',
+            dataType: 'json', // JSON 응답 기대
+            success: function (members) {
+                const tbody = $('#memberTableBody');
+                tbody.empty(); // 기존 행 삭제
+
+                const row =
+                    '<tr>' +
+                    '<td>' + members.id + '</td>' +
+                    '<td>' + members.name + '</td>' +
+                    '<td>' + members.email + '</td>' +
+                    '<td>' + members.age + '</td>' +
+                    '</tr>';
+                tbody.append(row);
+                $("#name").value(members.name);
+                $("#email").value(members.email);
+                $("#age").value(members.age);
+            },
+            error: function (xhr, status, error) {
+                alert('회원 목록 조회 실패: ' + status);
+                console.log(xhr.responseText);
+            }
+        });
+    }
+    // 페이지 로드시 자동으로 한 번 불러오기 (선택)
+    $(document).ready(function () {
+        loadMembers();  // loadMembers 함수 호출
+    });
+
+    // 버튼 클릭시 목록 다시 불러오기
+    $('#btnLoad').on('click', function () {
+        loadMembers();
+    });
+    // 버튼 클릭시 해당id회원 정보 불러오기
+    $('#idLoad').on('click', function () {
+        loadMember();
+    });
+    // 회원 추가
+    $('#register').on('click', function (e) {
+        //e.preventDefault(); // form 기본 제출 막기
+
+        const data = {
+            name: $('#name').val(), // 이몽룡
+            email: $('#email').val(),   // lee@hanbit.co.kr
+            age: parseInt($('#age').val(), 10)  // 35
+        };
+
+        $.ajax({
+            url: '/api/members',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function () {
+                alert('등록 완료');
+                loadMembers(); // 등록 후 목록 새로고침
+            },
+            error: function (xhr, status, error) {
+                alert('등록 실패: ' + status);
+                console.log(xhr.responseText);
+            }
+        });
+    });
+    // 회원 수정
+    $('#modify').on('click', function () {
+        const id = $('#id').val();
+        if (!id) {
+            alert('수정할 회원 ID를 입력하세요.');
+            return;
+        }
+
+        const data = {
+            name: $('#name').val(),
+            email: $('#email').val(),
+            age: parseInt($('#age').val(), 10)
+        };
+
+        $.ajax({
+            url: '/api/members/' + id,     // ✅ /api/members/{id}
+            method: 'PUT',                 // ✅ PUT 메서드
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (updated) {
+                alert('수정 완료');
+                loadMembers();             // 목록 새로고침
+            },
+            error: function (xhr, status, error) {
+                alert('수정 실패: ' + status);
+                console.log(xhr.responseText);
+            }
+        });
+    });
+    // 회원 삭제
+    $('#remove').on('click', function () {
+        const id = $('#id').val();
+        if (!id) {
+            alert('삭제할 회원 ID를 입력하세요.');
+            return;
+        }
+
+        if (!confirm(id + '번 회원을 정말 삭제하시겠습니까?')) {
+            return;
+        }
+
+        $.ajax({
+            url: '/api/members/' + id,   // /api/members/{id}
+            method: 'DELETE',
+            success: function () {
+                alert('삭제 완료');
+                $('#name').val('');
+                $('#email').val('');
+                $('#age').val('');
+                $('#id').val('');
+                loadMembers();           // 목록 새로고침
+            },
+            error: function (xhr, status, error) {
+                alert('삭제 실패: ' + status);
+                console.log(xhr.responseText);
+            }
+        });
+    });
+
+</script>
+</body>
+</html>
