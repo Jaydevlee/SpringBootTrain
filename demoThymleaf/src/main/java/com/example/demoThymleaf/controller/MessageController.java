@@ -17,6 +17,14 @@ public class MessageController {
     model.addAttribute("phone", "02-325-0384");
     return "message/message-customer";
   }
+
+  @GetMapping("message/key")
+  public String getMessageKey(Model model){
+    model.addAttribute("contactForm", "customer.contact.short");
+    model.addAttribute("name", "한빛미디어");
+    model.addAttribute("phone", "02-325-0384");
+    return "message/message-key";
+  }
 }
 
 

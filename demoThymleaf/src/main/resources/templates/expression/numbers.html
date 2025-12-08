@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>숫자 유틸리티</title>
+</head>
+<body>
+  <p>formatDecimal</p>
+  <p th:text="${#numbers.formatDecimal(num1, 1, 2)}"></p>
+  <p th:text="${#numbers.formatDecimal(num1, 10, 2)}"></p>
+  <p>-----------------------------------------------------------</p>
+  <p>formatInteger</p>
+  <p th:text="${#numbers.formatInteger(num2, 1, 'COMMA')}"></p>
+  <p th:text="${#numbers.formatInteger(num2, 10)}"></p>
+</body>
+</html>
