@@ -6,10 +6,7 @@ import com.example.demoMakeBoard.model.Article;
 import com.example.demoMakeBoard.repository.ArticleRepository;
 import com.example.demoMakeBoard.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,12 +24,5 @@ public class ArticleService {
             .name(article.getMember().getName())
             .email(article.getMember().getEmail())
             .build();
-  }
-
-  public List<ArticleDto> findAll(){
-    return articleRepository.findAll(Pageable).map(this::mapToArticleDto).toList();
-  }
-  public ArticleDto findById(Long id){
-    return articleRepository.findById(id).map(this::mapToArticleDto).orElseThrow();
   }
 }
