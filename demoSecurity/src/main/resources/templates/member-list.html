@@ -15,9 +15,9 @@
     </thead>
     <tbody>
      <tr th:each="member:${members}">
-       <td th:text="${members.id}">id</td>
-       <td th:text="${members.name}">이름</td>
-       <td th:text="${members.email}">이메일</td>
+       <td th:text="${member.id}">id</td>
+       <td th:text="${member.name}">이름</td>
+       <td th:text="${member.email}">이메일</td>
      </tr>
     </tbody>
   </table>
