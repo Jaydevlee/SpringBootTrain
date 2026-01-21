@@ -26,7 +26,7 @@ th:replace="~{base-layout::layout(~{::section})}">
       <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger">Password Error</p>
     </div>
     <div class="mb-3">
-      <label class="form-label">이름</label>
+      <label class="form-label">비밀번호 확인</label>
       <input type="text" class="form-controal" th:field="*{passwordConfirm}">
       <p th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}" class="text-danger">PasswordConfirm Error</p>
     </div>

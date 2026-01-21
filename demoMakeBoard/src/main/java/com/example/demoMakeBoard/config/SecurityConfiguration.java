@@ -26,10 +26,12 @@ public class SecurityConfiguration {
       public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf(withDefaults())
         .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/signup", "/article/list", "/article/content").permitAll()
+                .requestMatchers("/", "/article/list", "/article/content").permitAll()
                 .requestMatchers("/member/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/signup").permitAll()
                 .anyRequest().authenticated())
-        .formLogin(login -> login
+                .httpBasic(withDefaults())
+        .formLogin(form-> form
                 .loginPage("/login")
                 .defaultSuccessUrl("/")
                 .permitAll())
